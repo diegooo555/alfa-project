@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instanceAxios = axios.create({
-    baseURL: "http://localhost:4000/api",
+    baseURL: "https://alfa-project.onrender.com/api",
     withCredentials: true
 });
 
