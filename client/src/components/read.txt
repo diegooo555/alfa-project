@@ -1,0 +1,14 @@
+{tasksUser.map((task) => {
+
+  /* console.log(task) */
+
+  return(
+    <div key={task._id}>
+      <h1>{task.title}</h1>
+      <p>{task.description}</p>
+      <p>{getComponentsDate(convertDate(task.dateStart)).date}</p>
+    
+    
+    </div>
+  )
+} )}
