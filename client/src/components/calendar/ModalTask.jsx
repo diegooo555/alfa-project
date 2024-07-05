@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { deleteTaskRequest, getTasksRequest, updateTaskRequest } from '../../api/tasks'
 import {useForm} from 'react-hook-form'
@@ -38,15 +38,6 @@ function ModalTask({taskModal, setTaskModal, tasks, setTasksUser}) {
         }
     }
 
-    const updateTask = async (id, task) => {
-        try {
-            const res = await updateTaskRequest(id, task)
-            console.log(res)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     const getTasks = async () => {
         try {
             const res = await getTasksRequest()
@@ -56,12 +47,22 @@ function ModalTask({taskModal, setTaskModal, tasks, setTasksUser}) {
             console.log(error)
         }
     }
+
+    const updateTask = async (id, task) => {
+        try {
+            const res = await updateTaskRequest(id, task)
+            getTasks()
+            setTaskModal(false)
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     const onSubmit = handleSubmit((data) => {
         console.log(data)
         updateTask(task._id, data)
-        getTasks()
-       
-      })
+    })
 
     return(
         <div className="w-screen h-screen grid fixed top-0 left-0" onClick={() => setTaskModal([false, null])}>
