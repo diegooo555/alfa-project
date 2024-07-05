@@ -7,7 +7,7 @@ services:
     startCommand: node src/index.js
     envVars:
       - key: PORT
-        value: 10000 # O el puerto que utilices
+        value: 4000
 
   - type: web
     name: alfa-frontend

@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();//server
  
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'https://alfa-frontend.onrender.com',
     credentials: true
 }));
 
