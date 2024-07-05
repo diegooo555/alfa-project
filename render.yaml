@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: alfa-project
+    env: node
+    plan: free
+    buildCommand: cd src && npm install
+    startCommand: node src/index.js
+    envVars:
+      - key: PORT
+        value: 10000 # O el puerto que utilices
+
+  - type: web
+    name: alfa-frontend
+    env: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: client/dist
