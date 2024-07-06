@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import PropTypes from 'prop-types'
-import { deleteTaskRequest, getTasksRequest, updateTaskRequest } from '../../api/tasks'
 import {useForm} from 'react-hook-form'
 
-const WindowQuestion = ({setWindowQuestion, deleteTask, id}) => {
+const WindowQuestion = ({deleteTask, id}) => {
     return(
         <div className='w-screen h-screen fixed top-0 left-0 z-10 grid'>
             <div className='h-[30%] w-[30%] self-center justify-self-center flex flex-col justify-center items-center bg-white gap-2'>
@@ -11,16 +10,15 @@ const WindowQuestion = ({setWindowQuestion, deleteTask, id}) => {
                 <div className='flex justify-around items-center w-full'>
                     <button onClick={() => {
                         deleteTask(id)
-                        setWindowQuestion(false)
                     }} className='p-2 bg-red-500 w-[20%] rounded-md'>Si</button>
-                    <button onClick={() => setWindowQuestion(false)} className='p-2 bg-blue-400 w-[20%] rounded-md'>No</button>
+                    <button className='p-2 bg-blue-400 w-[20%] rounded-md'>No</button>
                 </div>
             </div>
         </div>
     )
 }
 
-function ModalTask({taskModal, setTaskModal, tasks, setTasksUser}) {
+function ModalTask({taskModal, setTaskModal, updateTask, deleteTask}) {
     const task = taskModal[1]
     const [title, setTitle] = useState(task.title)
     const [description, setDescription] = useState(task.description)
@@ -29,39 +27,11 @@ function ModalTask({taskModal, setTaskModal, tasks, setTasksUser}) {
     const [windowQuestion, setWindowQuestion] = useState(false)
     const {register, handleSubmit} = useForm()
 
-    const deleteTask = async (id) => {
-        try {
-            const res = await deleteTaskRequest(id) 
-            if(res.status === 204 ) setTasksUser(tasks.filter( taskActual => taskActual._id !== id))
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const getTasks = async () => {
-        try {
-            const res = await getTasksRequest()
-            setTasksUser(res.data)
-            console.log(res)
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
-    const updateTask = async (id, task) => {
-        try {
-            const res = await updateTaskRequest(id, task)
-            getTasks()
-            setTaskModal(false)
-            console.log(res)
-        } catch (error) {
-            console.log(error)
-        }
-    }
 
     const onSubmit = handleSubmit((data) => {
         console.log(data)
         updateTask(task._id, data)
+        setTaskModal(false)
     })
 
     return(
@@ -93,12 +63,11 @@ export default ModalTask
 ModalTask.propTypes = {
     taskModal: PropTypes.array.isRequired,
     setTaskModal: PropTypes.func.isRequired,
-    tasks: PropTypes.array.isRequired,
-    setTasksUser: PropTypes.func.isRequired,
+    updateTask: PropTypes.func.isRequired,
+    deleteTask: PropTypes.func.isRequired,
 }
 
 WindowQuestion.propTypes = {
-    setWindowQuestion: PropTypes.func.isRequired,
     deleteTask: PropTypes.func.isRequired,
     id: PropTypes.any.isRequired,
 }

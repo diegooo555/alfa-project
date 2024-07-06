@@ -1,8 +1,8 @@
-import { createContext, useState } from "react";
+import {useState } from "react";
 import PropTypes from "prop-types";
-import { createTaskRequest, getTasksRequest, deleteTaskRequest } from "../api/tasks";
+import { createTaskRequest, getTasksRequest, deleteTaskRequest, updateTaskRequest } from "../api/tasks";
+import { TaskContext } from "./useTasksContext";
 
-export const TaskContext = createContext();
 
 export const TaskProvider = ({children}) => {
 
@@ -20,17 +20,37 @@ export const TaskProvider = ({children}) => {
     }
 
     const createTask = async (task) => {
-        const res = await createTaskRequest(task)
-        console.log(res)
+        try {
+            const res = await createTaskRequest(task)
+            console.log(res)
+            getTasks()
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+
+    const updateTask = async (id, task) => {
+        try {
+            const res = await updateTaskRequest(id, task)
+            getTasks()
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const deleteTask = async (id) => {
-        const res = await deleteTaskRequest(id)
-        console.log(res)
+        try {
+            const res = await deleteTaskRequest(id) 
+            if(res.status === 204 ) setTasks(tasks.filter( taskActual => taskActual._id !== id))
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     return(
-        <TaskContext.Provider value={{tasks, createTask, getTasks, deleteTask}}>
+        <TaskContext.Provider value={{tasks, setTasks,createTask, getTasks, deleteTask, updateTask}}>
             {children}
         </TaskContext.Provider>
     )

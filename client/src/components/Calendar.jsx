@@ -4,6 +4,7 @@ import IndicatorHour from './calendar/IndicatorHour';
 import ModalTask from "./calendar/ModalTask";
 import { useEffect, useRef, useState } from "react";
 import { generateDaysWeek, getComponesFullDate} from "./calendar/logicCalendar";
+import { useTask } from "../context/useTasksContext.js";
 import PropTypes from 'prop-types';
 
 
@@ -96,10 +97,9 @@ const ColumnDay = ({ day, month, year, state, tasks, setTaskModal}) => {
   )
 }
 
-const Calendar =  ({tasks, setTasksUser}) =>  {
+const Calendar =  () =>  {
   const dateActual = new Date();
   const arrayDays = ["DO", "LU", "MA", "MI", "JU", "VI", "SA"]
-
   const dayActualNumber = dateActual.getDate()
   const dayActualString = arrayDays[dateActual.getDay()]
   const monthActual = dateActual.getMonth() + 1
@@ -108,6 +108,8 @@ const Calendar =  ({tasks, setTasksUser}) =>  {
   const daysWeek = generateDaysWeek(dayActualString, dayActualNumber, actualYear, monthActual, arrayDays)
   const scrollableContainerRef = useRef(null)
   const [taskModal, setTaskModal] = useState([false, null])
+
+  const {tasks, setTasks, updateTask, deleteTask} = useTask()
 
   useEffect(() => {
     const scrollCurrentTime = () => {
@@ -149,7 +151,7 @@ const Calendar =  ({tasks, setTasksUser}) =>  {
         </div>
       </div>
 
-      {taskModal[0] && (<ModalTask taskModal={taskModal} setTaskModal={setTaskModal} setTasksUser={setTasksUser} tasks={tasks}/>)}
+      {taskModal[0] && (<ModalTask taskModal={taskModal} setTaskModal={setTaskModal} updateTask={updateTask} deleteTask={deleteTask}/>)}
     </div>
   )
 }
@@ -179,9 +181,4 @@ RowHour.propTypes = {
   day: PropTypes.number.isRequired,
   year: PropTypes.number.isRequired,
   month: PropTypes.number.isRequired,
-}
-
-Calendar.propTypes = {
-  tasks: PropTypes.array,
-  setTasksUser: PropTypes.func,
 }

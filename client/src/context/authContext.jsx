@@ -1,10 +1,10 @@
 
-import { createContext, useState, useEffect} from "react"
+import {useState, useEffect} from "react"
 import { registerRequest, loginUser, verifyTokenRequest } from '../api/auth.js'
 import PropTypes from 'prop-types';
+import { AuthContext } from "./useAuthContext.js";
 import Cookies from "js-cookie";
 
-export const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null)

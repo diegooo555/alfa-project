@@ -1,50 +1,28 @@
 import { useForm } from "react-hook-form"
-import { getTasksRequest, createTaskRequest } from "../api/tasks.js"
 import '../css/tasks.css'
 import { useEffect, useState } from "react"
 import Calendar from "../components/Calendar.jsx"
 import { Link } from "react-router-dom"
 import { useAuth } from "../context/useAuthContext.js"
+import { useTask } from "../context/useTasksContext.js"
 
 function TasksPage() {
   const { register, handleSubmit } = useForm()
 
-  const [tasksUser, setTasksUser] = useState([])
-
   const {logOut, user} = useAuth()
+
+  const {getTasks, createTask, tasks} = useTask()
 
   console.log(user)
 
-  const getTasksUser = async () => {
-    /* console.log(res) */
-    try {
-      const res = await getTasksRequest()
-      setTasksUser(res.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   console.log("Renderizado page tasks")
 
-  const createTasksUser = async (task) => {
-    try {
-      const res = await createTaskRequest(task)
-      getTasksUser()
-      console.log(res)
-    } catch (error) {
-      console.log(error)
-    }
-
-  }
-
   const onSubmit = handleSubmit((data) => {
-    createTasksUser(data)
+    createTask(data)
   })
 
   useEffect(() => {
-    getTasksUser()
-
+    getTasks()
   }, [])
 
   const convertDate = (date) => {
@@ -90,8 +68,8 @@ function TasksPage() {
 
   return (
     <>
-      <Calendar tasks={tasksUser} setTasksUser={setTasksUser}/>
-      {tasksUser.map((task) => {
+      <Calendar/>
+      {tasks.map((task) => {
 
         return (
           <div key={task._id}>
