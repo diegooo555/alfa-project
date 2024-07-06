@@ -33,7 +33,7 @@ const ColumnHours = () => {
 const RowHour = ({ hourStart, formatStart, hourEnd, formatEnd, day, month, year }) => {
 
   return (
-    <div className="border-solid border-[1px] border-blue-300">{`${hourStart + formatStart} - ${hourEnd + formatEnd} ${year}`}</div>
+    <div className="border-solid border-[1px] border-blue-300 hover:bg-blue-100"></div>
   )
 }
 
