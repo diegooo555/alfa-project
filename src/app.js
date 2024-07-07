@@ -23,14 +23,5 @@ app.use('/api' ,authRoutes);
 
 app.use('/api', tasks)
 
-if (process.env.NODE_ENV === "production") {
-    const path = await import("path");
-    app.use(express.static("client/dist"));
-  
-    app.get("*", (req, res) => {
-      console.log(path.resolve("client", "dist", "index.html") );
-      res.sendFile(path.resolve("client", "dist", "index.html"));
-    });
-  }
 
 export default app;
