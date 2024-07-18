@@ -109,7 +109,7 @@ const Calendar =  () =>  {
   const scrollableContainerRef = useRef(null)
   const [taskModal, setTaskModal] = useState([false, null])
 
-  const {tasks, setTasks, updateTask, deleteTask} = useTask()
+  const {tasks, updateTask, deleteTask} = useTask()
 
   useEffect(() => {
     const scrollCurrentTime = () => {

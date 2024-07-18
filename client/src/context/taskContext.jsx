@@ -1,4 +1,4 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { createTaskRequest, getTasksRequest, deleteTaskRequest, updateTaskRequest } from "../api/tasks";
 import { TaskContext } from "./useTasksContext";
@@ -48,6 +48,10 @@ export const TaskProvider = ({children}) => {
             console.log(error)
         }
     }
+
+    useEffect(() => {
+        getTasks()
+    },[])
 
     return(
         <TaskContext.Provider value={{tasks, setTasks,createTask, getTasks, deleteTask, updateTask}}>
