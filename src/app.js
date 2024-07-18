@@ -4,12 +4,11 @@ import authRoutes from './routes/auth.routes.js';
 import tasks from './routes/task.routes.js';
 import cookieParser from "cookie-parser";//middelware
 import cors from 'cors';
-import { FRONTEND_URL } from "./config.js";
 
 const app = express();//server
  
 app.use(cors({
-    origin: FRONTEND_URL,
+    origin: 'https://alfa-project-frontend.onrender.com',
     credentials: true,
 }));
 app.use(morgan('dev'));
