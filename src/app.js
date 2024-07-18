@@ -8,8 +8,10 @@ import { FRONTEND_URL } from "./config.js";
 
 const app = express();//server
  
-app.use(cors());
-
+app.use(cors({
+    origin: FRONTEND_URL,
+    credentials: true,
+}));
 app.use(morgan('dev'));
 
 app.use(express.json());
