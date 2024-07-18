@@ -49,9 +49,6 @@ export const TaskProvider = ({children}) => {
         }
     }
 
-    useEffect(() => {
-        getTasks()
-    },[])
 
     return(
         <TaskContext.Provider value={{tasks, setTasks,createTask, getTasks, deleteTask, updateTask}}>
