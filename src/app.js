@@ -8,7 +8,7 @@ import cors from 'cors';
 const app = express();//server
  
 app.use(cors({
-    origin: 'https://alfa-project-frontend.onrender.com',
+    origin: 'https://alfa-project-frontend.onrender.com/#',
     credentials: true,
 }));
 app.use(morgan('dev'));
