@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { HashRouter, Routes, Route } from "react-router-dom"
 
 import AlfaPage from "./pages/AlfaPage"
 
@@ -21,7 +21,7 @@ function App() {
   return (
     <AuthProvider>
       <TaskProvider>
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path='/' element={<AlfaPage />} />
             <Route path='/register' element={<RegisterPage />} />
@@ -31,7 +31,7 @@ function App() {
               <Route path='/profile' element={<h1>Profile</h1>} />            
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
       </TaskProvider>
     </AuthProvider>
   )
